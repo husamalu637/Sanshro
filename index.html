@@ -16,11 +16,8 @@
         .banner-bottom { max-width: 900px; margin-top: 30px; margin-bottom: 20px; }
         
         .main-container { max-width: 900px; width: 95%; margin: 0 auto; text-align: center; }
-        
-        .back-home-btn { background: #252f44; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-family: 'Cairo', sans-serif; font-weight: bold; cursor: pointer; margin: 20px 0; transition: 0.3s; display: inline-flex; align-items: center; gap: 5px; text-decoration: none; }
-        .back-home-btn:hover { background: var(--primary); color: #000; }
 
-        .video-wrapper-outer { position: relative; z-index: 1; }
+        .video-wrapper-outer { position: relative; z-index: 1; margin-top: 20px; }
         .video-display-area { background: #000; border-radius: 20px; overflow: hidden; border: 3px solid var(--primary); box-shadow: 0 0 30px rgba(0, 210, 255, 0.2); margin-bottom: 30px; display: none; position: relative; }
         .responsive-iframe { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #000; overflow: hidden; }
         .responsive-iframe iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; overflow: hidden; pointer-events: auto; }
@@ -49,18 +46,16 @@
 </div>
 
 <div class="main-container">
-    <a href="https://husamalu637.github.io/Sada5/" class="back-home-btn">⬅ العودة إلى الرئيسية</a>
-
     <div class="video-wrapper-outer">
         <div id="videoPlayer" class="video-display-area">
-            <div class="responsive-iframe"><iframe id="mainIframe" src="" allowfullscreen allow="autoplay; encrypted-media" scrolling="no"></iframe></div>
+            <div class="responsive-iframe"><iframe id="mainIframe" src="" allowfullscreen allow="autoplay; encrypted-media" scrolling="no" sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe></div>
             <div id="episodeTitle" style="padding: 10px; background: var(--card); font-weight: bold;"></div>
         </div>
     </div>
 
     <h2>اضغط على رقم الحلقة للمشاهدة:</h2>
     <div class="episodes-grid" id="buttonsGrid"></div>
-    <p class="info-text">جميع حلقات سانشيرو الـ 37 متوفرة وتعمل بكفاءة عالية</p>
+    <p class="info-text">جميع حلقات سانشيرو المتاحة تعمل بكفاءة عالية</p>
 </div>
 
 <!-- إعلان البنر السفلي -->
@@ -74,45 +69,44 @@
 <script>
     const popupAdLink = "https://www.profitablecpmratenetwork.com/e41dj2h87?key=bef514b5ca3fa945e7a3b60e4a9ef21a";
 
-    // روابط الـ 37 حلقة الخاصة بمسلسل سانشيرو مرتبة بدقة
-    const episodeLinks = [
-        "https://meyon.com.ye/videos/embed/e0054246-a991-4c30-9c78-9c8024856cd1", // 1
-        "https://meyon.com.ye/videos/embed/bbfd76d8-1960-490e-a3e3-0d3902dcbce4", // 2
-        "https://meyon.com.ye/videos/embed/c9e845e4-8f77-4a5d-b237-e139acf2fef1", // 3
-        "https://meyon.com.ye/videos/embed/abaa3238-630c-42f1-958a-47b3679a81bb", // 4
-        "https://meyon.com.ye/videos/embed/4f130f80-09c7-4c2c-a356-30f88c17a5a4", // 5
-        "https://meyon.com.ye/videos/embed/69afd5a3-b515-4035-a549-0c40acfaf7ff", // 6
-        "https://meyon.com.ye/videos/embed/3e09db74-7cbd-427f-9744-26a98dc9753f", // 7
-        "https://meyon.com.ye/videos/embed/cc118135-6342-4a32-9a7e-51f2b6eed2c2", // 8
-        "https://meyon.com.ye/videos/embed/cc118135-6342-4a32-9a7e-51f2b6eed2c2", // 9
-        "https://meyon.com.ye/videos/embed/110d53dc-97e0-4a26-8a13-70363e3fc09b", // 10
-        "https://meyon.com.ye/videos/embed/e7c5a0f2-e573-4d4d-bfd1-f88875c8fd55", // 11
-        "https://meyon.com.ye/videos/embed/dc91439e-d1c0-4db2-809a-8bbf6f2fd540", // 12
-        "https://meyon.com.ye/videos/embed/0c657d80-27df-4a93-968d-9e8b9f21d629", // 13
-        "https://meyon.com.ye/videos/embed/3a9ae37d-7179-4a8b-98ac-8f37b0246992", // 14
-        "https://meyon.com.ye/videos/embed/e97046c9-9ad7-4437-ab6f-b0765422706d", // 15
-        "https://meyon.com.ye/videos/embed/70417c5f-d26a-44ba-a193-2d6e9eeb44c1", // 16
-        "https://meyon.com.ye/videos/embed/c6071120-af07-4652-b1a7-83180ec7761f", // 17
-        "https://meyon.com.ye/videos/embed/bb101f89-a8b6-47b0-a769-20c0e625a66f", // 18
-        "https://meyon.com.ye/videos/embed/a3df2bda-156e-4785-b17e-0dd4586ecf33", // 19
-        "https://meyon.com.ye/videos/embed/008b21d3-069c-4a27-a278-0657258e5cae", // 20
-        "https://meyon.com.ye/videos/embed/742d8de1-ef31-4a08-b690-cc667a8efc72", // 21
-        "https://meyon.com.ye/videos/embed/4e88fe5a-2e5b-47e6-9a7a-f848f9473ce0", // 22
-        "https://meyon.com.ye/videos/embed/3b04649e-5ccf-4ef8-9bab-979c04a8cff5", // 23
-        "https://meyon.com.ye/videos/embed/d7f21ffd-11f7-4a2d-b531-d4fa69c7cacb", // 24
-        "https://meyon.com.ye/videos/embed/4e02cc56-b612-463c-8a0b-f8a44cab81c5", // 25
-        "https://meyon.com.ye/videos/embed/b6d399a6-f91f-4ca2-a59d-bcd3944d5441", // 26
-        "https://meyon.com.ye/videos/embed/3ef579d0-bb37-4dfe-b097-a0ac401d5fb1", // 27
-        "https://meyon.com.ye/videos/embed/01da54b4-b4e2-4efb-a28f-6e9206470b2d", // 28
-        "https://meyon.com.ye/videos/embed/26b5eb9d-9a83-46b0-9b13-7402951bd269", // 29
-        "https://meyon.com.ye/videos/embed/c990468d-f7ee-4384-8608-a6db01a151f2", // 30
-        "https://meyon.com.ye/videos/embed/e4f8c203-4793-4631-a44b-399fd4c8690d", // 31
-        "https://meyon.com.ye/videos/embed/276bc02e-b0cc-48e0-b824-a6be23ae4852", // 32
-        "https://meyon.com.ye/videos/embed/b61ad376-a23d-4626-987c-a12179c1b1ef", // 33
-        "https://meyon.com.ye/videos/embed/84ab3bea-d5ed-47b2-b551-91ff0b01d41f", // 34
-        "https://meyon.com.ye/videos/embed/8b3ba421-817d-4b51-b597-f63fcec9dc09", // 35
-        "https://meyon.com.ye/videos/embed/bf45c02d-9928-4b05-9337-8aa149ad9c1b", // 36
-        "https://meyon.com.ye/videos/embed/edd4c538-5fce-4854-8e58-851f7fa3dedb"  // 37
+    // روابط حلقات سانشيرو مرتبة ومنظمة وخالية من التكرار
+    const episodesData = [
+        { num: 1, url: "https://meyon.com.ye/videos/embed/e0054246-a991-4c30-9c78-9c8024856cd1" },
+        { num: 2, url: "https://meyon.com.ye/videos/embed/bbfd76d8-1960-490e-a3e3-0d3902dcbce4" },
+        { num: 3, url: "https://meyon.com.ye/videos/embed/c9e845e4-8f77-4a5d-b237-e139acf2fef1" },
+        { num: 4, url: "https://meyon.com.ye/videos/embed/abaa3238-630c-42f1-958a-47b3679a81bb" },
+        { num: 5, url: "https://meyon.com.ye/videos/embed/4f130f80-09c7-4c2c-a356-30f88c17a5a4" },
+        { num: 6, url: "https://meyon.com.ye/videos/embed/69afd5a3-b515-4035-a549-0c40acfaf7ff" },
+        { num: 7, url: "https://meyon.com.ye/videos/embed/3e09db74-7cbd-427f-9744-26a98dc9753f" },
+        { num: 8, url: "https://meyon.com.ye/videos/embed/cc118135-6342-4a32-9a7e-51f2b6eed2c2" },
+        { num: 10, url: "https://meyon.com.ye/videos/embed/110d53dc-97e0-4a26-8a13-70363e3fc09b" },
+        { num: 11, url: "https://meyon.com.ye/videos/embed/e7c5a0f2-e573-4d4d-bfd1-f88875c8fd55" },
+        { num: 12, url: "https://meyon.com.ye/videos/embed/dc91439e-d1c0-4db2-809a-8bbf6f2fd540" },
+        { num: 13, url: "https://meyon.com.ye/videos/embed/0c657d80-27df-4a93-968d-9e8b9f21d629" },
+        { num: 14, url: "https://meyon.com.ye/videos/embed/3a9ae37d-7179-4a8b-98ac-8f37b0246992" },
+        { num: 15, url: "https://meyon.com.ye/videos/embed/e97046c9-9ad7-4437-ab6f-b0765422706d" },
+        { num: 16, url: "https://meyon.com.ye/videos/embed/70417c5f-d26a-44ba-a193-2d6e9eeb44c1" },
+        { num: 17, url: "https://meyon.com.ye/videos/embed/c6071120-af07-4652-b1a7-83180ec7761f" },
+        { num: 18, url: "https://meyon.com.ye/videos/embed/bb101f89-a8b6-47b0-a769-20c0e625a66f" },
+        { num: 19, url: "https://meyon.com.ye/videos/embed/a3df2bda-156e-4785-b17e-0dd4586ecf33" },
+        { num: 20, url: "https://meyon.com.ye/videos/embed/008b21d3-069c-4a27-a278-0657258e5cae" },
+        { num: 21, url: "https://meyon.com.ye/videos/embed/742d8de1-ef31-4a08-b690-cc667a8efc72" },
+        { num: 22, url: "https://meyon.com.ye/videos/embed/4e88fe5a-2e5b-47e6-9a7a-f848f9473ce0" },
+        { num: 23, url: "https://meyon.com.ye/videos/embed/3b04649e-5ccf-4ef8-9bab-979c04a8cff5" },
+        { num: 24, url: "https://meyon.com.ye/videos/embed/d7f21ffd-11f7-4a2d-b531-d4fa69c7cacb" },
+        { num: 25, url: "https://meyon.com.ye/videos/embed/4e02cc56-b612-463c-8a0b-f8a44cab81c5" },
+        { num: 26, url: "https://meyon.com.ye/videos/embed/b6d399a6-f91f-4ca2-a59d-bcd3944d5441" },
+        { num: 27, url: "https://meyon.com.ye/videos/embed/3ef579d0-bb37-4dfe-b097-a0ac401d5fb1" },
+        { num: 28, url: "https://meyon.com.ye/videos/embed/01da54b4-b4e2-4efb-a28f-6e9206470b2d" },
+        { num: 29, url: "https://meyon.com.ye/videos/embed/26b5eb9d-9a83-46b0-9b13-7402951bd269" },
+        { num: 30, url: "https://meyon.com.ye/videos/embed/c990468d-f7ee-4384-8608-a6db01a151f2" },
+        { num: 31, url: "https://meyon.com.ye/videos/embed/e4f8c203-4793-4631-a44b-399fd4c8690d" },
+        { num: 32, url: "https://meyon.com.ye/videos/embed/276bc02e-b0cc-48e0-b824-a6be23ae4852" },
+        { num: 33, url: "https://meyon.com.ye/videos/embed/b61ad376-a23d-4626-987c-a12179c1b1ef" },
+        { num: 34, url: "https://meyon.com.ye/videos/embed/84ab3bea-d5ed-47b2-b551-91ff0b01d41f" },
+        { num: 35, url: "https://meyon.com.ye/videos/embed/8b3ba421-817d-4b51-b597-f63fcec9dc09" },
+        { num: 36, url: "https://meyon.com.ye/videos/embed/bf45c02d-9928-4b05-9337-8aa149ad9c1b" },
+        { num: 37, url: "https://meyon.com.ye/videos/embed/edd4c538-5fce-4854-8e58-851f7fa3dedb" }
     ];
 
     const grid = document.getElementById('buttonsGrid'); 
@@ -124,20 +118,18 @@
     function lockPage() { scrollPosition = window.scrollY; document.body.style.position = 'fixed'; document.body.style.top = `-${scrollPosition}px`; document.body.style.width = '100%'; }
     function unlockPage() { document.body.style.position = ''; document.body.style.top = ''; document.body.style.width = ''; window.scrollTo(0, scrollPosition); }
 
-    episodeLinks.forEach((link, index) => { 
+    episodesData.forEach((ep) => { 
         const btn = document.createElement('button'); 
         btn.className = 'ep-btn'; 
-        
-        let epNum = index + 1;
-        btn.innerText = epNum; 
+        btn.innerText = ep.num; 
         
         btn.onclick = function() { 
             window.open(popupAdLink, '_blank');
             
             lockPage(); 
             player.style.display = 'block'; 
-            iframe.src = link; 
-            titleDisp.innerText = "أنت تشاهد الآن: سانشيرو - الحلقة " + epNum; 
+            iframe.src = ep.url; 
+            titleDisp.innerText = "أنت تشاهد الآن: سانشيرو - الحلقة " + ep.num; 
             
             document.querySelectorAll('.ep-btn').forEach(b => b.classList.remove('active')); 
             btn.classList.add('active'); 
